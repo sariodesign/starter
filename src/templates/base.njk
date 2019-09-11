@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% include "../objects/head.njk" %}
+  <body>
+
+    {% include "../components/header.njk" %}
+
+    <main>
+      {% block main %}{% endblock %}
+    </main>
+
+    {% include "../components/footer.njk" %}
+
+  </body>
+</html>
