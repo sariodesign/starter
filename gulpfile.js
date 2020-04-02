@@ -3,8 +3,8 @@
 var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence')
 var del = require('del');
-//var fs = require('file-system');
-//var data = require('gulp-data');
+var fs = require('file-system');
+var data = require('gulp-data');
 var nunjucksRender = require('gulp-nunjucks-render');
 //var prettify = require('gulp-html-prettify');
 var sass = require('gulp-sass');
@@ -19,9 +19,9 @@ gulp.task('clean', function () {
 
 gulp.task('html', function () {
   return gulp.src('src/pages/*.njk')
-   /*.pipe(data(function() {
-      return JSON.parse(fs.readFileSync('src/data.json'));
-    }))*/
+    .pipe(data(function() {
+      return JSON.parse(fs.readFileSync('./src/data.json'));
+    }))
     .pipe(nunjucksRender({
       path: ['./src/objects','./src/components','./src/templates/','./src/pages/'] // String or Array
     }))
