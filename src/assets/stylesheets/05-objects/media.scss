@@ -1,0 +1,16 @@
+.o-media {
+
+  &--video {
+    position: relative;
+  }
+
+  &__controller {
+    background-color: rgba(255,255,255,.85);
+    padding: 8px;
+    width: 100%;
+
+    .o-icon {
+      cursor: pointer;
+    }
+  }
+}
