@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   {% include "../objects/head.njk" %}
   <body>
+    {% include "../objects/icons.njk" %}
 
     {% include "../components/header.njk" %}
 
@@ -10,6 +11,8 @@
     </main>
 
     {% include "../components/footer.njk" %}
+
+    {% block javascript %}{% endblock %}
 
   </body>
 </html>
