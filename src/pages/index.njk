@@ -1,5 +1,26 @@
 {% extends "../templates/base.njk" %}
 
+{% set titlePage = 'Title page' %}
+{% set metaDescription = 'This is a first page created' %}
+
+{% block head %}
+
+  {% include "../objects/head.njk" %}  
+
+  {% block stylesheets %} 
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+  {% endblock %}
+
+{% endblock %}
+
 {% block main %}
   <h1>This is the main of homepage</h1>
+
+  {% include "../components/article.njk" %}
+{% endblock %}
+
+{% block javascript %}
+
+  <script src="js/video.js"></script>
+
 {% endblock %}
