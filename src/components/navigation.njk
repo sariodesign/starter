@@ -1,0 +1,9 @@
+<nav class="c-nav">
+  <ul class="c-nav__menu">
+    {% for item in nav %}
+      <li class="c-nav__item">
+        <a class="o-link c-nav__link" href="{{ item.url }}" aria-label="navigation-url">{{ item.page }}</a>
+      </li>
+    {% endfor %}
+  </ul>  
+</nav>

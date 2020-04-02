@@ -1,0 +1,8 @@
+.c-nav {
+  display: flex;
+  flex-direction: column;
+
+  &__link {
+    color: $secondary-color;
+  }
+}
