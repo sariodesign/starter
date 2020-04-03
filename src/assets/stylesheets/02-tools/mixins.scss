@@ -1,0 +1,25 @@
+@mixin media-query($breakpoint, $range: "min-width") {
+
+  @if map-has-key($breakpoints, $breakpoint) {
+
+      $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+      @if (#{$range} == "max-width"){
+
+          @media (#{$range}: ($breakpoint-value - 1px)) {
+              @content;
+          }
+
+      } @else {
+
+          @media (#{$range}: $breakpoint-value) {
+              @content;
+          }
+
+      }
+
+  } @else {
+
+      @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}

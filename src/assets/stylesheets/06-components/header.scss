@@ -1,5 +1,7 @@
 .c-header {
   background-color: $primary-color;
   display: flex;
+  justify-content: space-between;
+  padding: 16px;
   width: 100%;
 }
