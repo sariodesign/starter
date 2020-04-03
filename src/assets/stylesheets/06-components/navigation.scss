@@ -94,7 +94,7 @@
   }
 
   &__toggle-icon {
-    background-color: $color-white;
+    background-color: $secondary-color;
     border-radius: 2px;
     height: 3px;
     left: 0;
@@ -106,7 +106,7 @@
 
     &:before,
     &:after {
-      background-color: $color-white;
+      background-color: $secondary-color;
       content: '';
       height: 100%;
       left: 0;

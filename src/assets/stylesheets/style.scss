@@ -1,5 +1,6 @@
 /* SETTINGS */
 //============================================================================//
+@import '01-settings/fontface';
 @import '01-settings/maps';
 @import '01-settings/variables';
 
@@ -18,6 +19,7 @@
 /* OBJECT */
 @import '05-objects/button';
 @import '05-objects/icon';
+@import '05-objects/layout';
 @import '05-objects/link';
 @import '05-objects/media';
 @import '05-objects/typography';
@@ -26,6 +28,7 @@
 /* COMPONENTS */
 @import '06-components/article';
 @import '06-components/header';
+@import '06-components/footer';
 @import '06-components/navigation';
 //============================================================================//
 
