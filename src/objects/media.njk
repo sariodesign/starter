@@ -1,0 +1,28 @@
+{# Macro for generate media image #}
+{% macro image(source, alt, responsive='', bpSource='' )%}
+  <figure class="o-media">
+    {% if responsive === 'responsive' %}
+      <picture>
+        {% for srcset, bp in bpSource -%}
+          <source srcset="{{ srcset }}"
+                  media="(min-width: {{ bp }})">
+        {%- endfor %}
+        <img class="o-media__image" src="{{ source }}" alt="{{ alt }}" />
+      </picture>
+    {% else %}
+      <img class="o-media__image" src="{{ source }}" alt="{{ alt }}" />
+    {% endif %}
+  </figure>
+{% endmacro %}
+
+{##}
+
+{# Macro for generate media video #}
+{% macro video(source) %}
+  <video class="o-media--video" playsinline>    
+    {% for src, type in source -%}
+      <source src="{{ src }}" type="{{ type }}">
+    {%- endfor %}
+  </video>
+  {% include "controls.njk" %}
+{% endmacro %}

@@ -1,0 +1,14 @@
+// Colors
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-dark: #1B2D3A;
+$color-yellow: #FAAB57;
+
+$primary-color: $color-dark;
+$secondary-color: $color-yellow;
+
+// Fonts
+$safe-font: 'Arial', 'Helvetica', sans-serif;
+$heading-font: 'ZillaSlab Semibold', $safe-font;
+$text-font: 'Lato Regular', $safe-font;
+$text-font--bolded: 'Lato Bold', $safe-font;

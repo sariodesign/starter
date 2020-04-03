@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+figure {
+  margin: 0;
+}
+
+img,
+video {
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: $heading-font;
+  font-weight: 600;
+}
+
+div, section, table, footer, ul, article, p, a, span {
+  font-family: $text-font;
+  font-weight: 400;
+}
+
+p {
+  margin-bottom: 24px;
+}
+
+strong {
+  font-family: $text-font--bolded;
+  font-weight: 700;
+}
