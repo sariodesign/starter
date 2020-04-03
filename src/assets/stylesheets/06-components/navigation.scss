@@ -1,16 +1,35 @@
 .c-nav {
+  align-items: center;
   display: flex;
 
-  @include media-query('laptop'){
-    align-items: center;
-  }
-
   &__menu {
+    background-color: $primary-color;
     display: flex;
     flex-direction: column;
+    left: 0;
+    min-height: calc(100vh - 82px);
+    min-width: 85%;
+    opacity: 0;
+    padding: 16px;
+    position: absolute;
+    top: 100%;
+    transform: translateX(-100%);
+    transition: transform .2s linear, opacity .22s ease-in-out .175s;
+
+    &--open {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity .22s ease-in-out, transform .2s linear .175s;
+    }
 
     @include media-query('laptop'){
       flex-direction: row;
+      min-height: unset;
+      min-width: unset;
+      position: relative;
+      opacity: 1;
+      transform: none;
+      top: 0;
     }
   }
 
@@ -25,5 +44,79 @@
   &__link {
     color: $secondary-color;
     text-transform: uppercase;
+  }
+
+  &__toggle {
+    height: 48px;
+    position: relative;
+    width: 48px;
+
+    @include media-query('laptop') {
+      display: none;
+    }
+  }
+  
+  &__toggle-input {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      cursor: pointer;
+      height: 100%;
+      left: 0;
+      margin: 0;
+      outline: none;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+
+    &:checked + .c-nav__toggle-icon {
+      background-color: $primary-color;
+      
+
+      &:before {
+        top: 0;
+        transform: rotate(-45deg);
+        transition: top .2s ease-in-out, transform .2s ease-in-out .2s;
+      }
+
+      &:after {
+        top: 0;
+        transform: rotate(45deg);
+        transition: top .2s ease-in-out, transform .2s ease-in-out .2s;
+      }
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+
+  &__toggle-icon {
+    background-color: $color-white;
+    border-radius: 2px;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color .05s ease-in-out .2s;
+    width: 100%;
+
+    &:before,
+    &:after {
+      background-color: $color-white;
+      content: '';
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: -11px;
+      width: 100%;
+      transition: transform .2s ease-in-out, top .2s ease-in-out .2s;
+    }
+    &:after {
+      top: 11px;
+    }
   }
 }
