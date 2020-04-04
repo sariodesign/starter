@@ -1,3 +1,9 @@
+# Ignore node modules folder
 /node_modules
+
+# Ignore dist files
 /dist
+
+# Ignore files locked
 package-lock.json
+yarn.lock
