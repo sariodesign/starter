@@ -1,2 +1,2 @@
-# starter
-Another stater kit for create website
+# Starter Kit
+A complete tool for start your static site
