@@ -1,75 +1,80 @@
-'use strict';
+/* 'use strict';
 
-var gulp = require('gulp');
-var gulpSequence = require('gulp-sequence')
-var del = require('del');
-var fs = require('file-system');
-var data = require('gulp-data');
-var nunjucksRender = require('gulp-nunjucks-render');
-//var prettify = require('gulp-html-prettify');
-var sass = require('gulp-sass');
-//var imagemin = require('gulp-imagemin');
-//var imageminJpegtran = require('imagemin-jpegtran');
-//var webp = require('gulp-webp');
-var browserSync = require('browser-sync').create();
+var prettify = require('gulp-html-prettify');
+var imagemin = require('gulp-imagemin');
+var imageminJpegtran = require('imagemin-jpegtran');
+var webp = require('gulp-webp');
 
-gulp.task('clean', function () {
-  return del(['./dist']);
-});
+*/
 
-gulp.task('html', function () {
-  return gulp.src('src/pages/*.njk')
-    .pipe(data(function() {
-      return JSON.parse(fs.readFileSync('./src/data.json'));
-    }))
-    .pipe(nunjucksRender({
-      path: ['./src/objects','./src/components','./src/templates/','./src/pages/'] // String or Array
-    }))
-    //.pipe(prettify({indent_char: ' ', indent_size: 2}))
-    .pipe(gulp.dest('./dist'))
-    .pipe(browserSync.stream());
-});
-
-gulp.task('fonts', function() {
-  return gulp.src('./src/assets/fonts/*.+(woff|woff2)')
-    .pipe(gulp.dest('./dist/fonts/'));
-});
-
-gulp.task('img', function() {
-  return gulp.src('./src/assets/images/*.+(png|jpg|jpeg|gif|svg)')
-    .pipe(gulp.dest('./dist/img/'));
-});
-
-gulp.task('video', function() {
-  return gulp.src('./src/assets/video/*.+(webm|mp4)')
-    .pipe(gulp.dest('./dist/video/'));
-});
+const { series, parallel, src, dest, watch } = require('gulp');
+const fs = require('file-system');
+const nunjucksRender = require('gulp-nunjucks-render');
+const data = require('gulp-data');
+const sass = require('gulp-sass');
+const browserSync = require('browser-sync').create();
 
 sass.compiler = require('node-sass');
 
-gulp.task('sass', function () {
-  return gulp.src('./src/assets/stylesheets/*.scss')
+function clean(cb) {
+  // body omitted
+  cb();
+}
+
+const htmlTask = () => {
+  return src('./src/pages/*.njk')
+  .pipe(data(function() {
+    return JSON.parse(fs.readFileSync('./src/data.json'));
+  }))
+  .pipe(nunjucksRender({
+    path: ['./src/objects','./src/components','./src/templates/','./src/pages/'] // String or Array
+  }))
+  .pipe(dest('./dist'));
+}
+
+const images = () => {
+  return src('./src/assets/images/*.+(png|jpg|jpeg|gif|svg)')
+    .pipe(dest('./dist/img/'));
+}
+
+const fonts = () => {
+  return src('./src/assets/fonts/*.+(woff|woff2)')
+    .pipe(dest('./dist/fonts/'));
+};
+
+const video = () => {
+  return src('./src/assets/video/*.+(webm|mp4)')
+    .pipe(dest('./dist/video/'));
+};
+
+const cssTask = () => {
+  return src('./src/assets/stylesheets/*.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./dist/css'))
-    .pipe(browserSync.stream());
-});
+    .pipe(dest('./dist/css'));
+}
 
-gulp.task('js', function() {
-  return gulp.src('./src/assets/javascripts/*.js')
-    .pipe(gulp.dest('./dist/js/'))
-    .pipe(browserSync.stream());
-});
+const jsTask = () => {
+  return src('./src/assets/javascripts/*.js')
+    .pipe(dest('./dist/js/'));
+}
 
-gulp.task('launch-browser', function() {
-    browserSync.init({
-        server: {
-            baseDir: "./dist"
-        }
-    });
+const browserSyncServe = (cb) => {
+  browserSync.init({
+      server: {
+          baseDir: "./dist"
+      }
+  });
+  cb();
+}
 
-    gulp.watch('./src/assets/stylesheets/**/*.scss', ['sass']);
-    gulp.watch('./src/assets/javascripts/*.js', ['js']);
-    gulp.watch('./src/**/*.njk', ['html']);
-});
+const browserSyncReload = (cb) => {
+  browserSync.reload();
+  cb();
+}
 
-gulp.task('default', gulpSequence('clean', ['html', 'sass', 'js', 'fonts', 'img', 'video', 'launch-browser']));
+const watchTask = () => {
+  watch('src/**/*.njk', browserSyncReload);
+  watch(['./src/assets/stylesheets/**/*.scss', './src/assets/javascripts/*.js'], series(cssTask, jsTask, browserSyncReload));
+}
+
+exports.build = series(clean, htmlTask, cssTask, jsTask, browserSyncServe, watchTask, parallel(images, fonts, video));
