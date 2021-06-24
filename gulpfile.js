@@ -1,14 +1,6 @@
-/* 'use strict';
-
-var prettify = require('gulp-html-prettify');
-var imagemin = require('gulp-imagemin');
-var imageminJpegtran = require('imagemin-jpegtran');
-var webp = require('gulp-webp');
-
-*/
-
 const { series, parallel, src, dest, watch } = require('gulp');
 const fs = require('file-system');
+const clean = require('gulp-clean'); 
 const nunjucksRender = require('gulp-nunjucks-render');
 const data = require('gulp-data');
 const sass = require('gulp-sass');
@@ -16,9 +8,10 @@ const browserSync = require('browser-sync').create();
 
 sass.compiler = require('node-sass');
 
-function clean(cb) {
-  // body omitted
-  cb();
+
+const cleanTask = () => {
+  return src('./dist', {read: false})
+        .pipe(clean());
 }
 
 const htmlTask = () => {
@@ -33,7 +26,7 @@ const htmlTask = () => {
 }
 
 const images = () => {
-  return src('./src/assets/images/*.+(png|jpg|jpeg|gif|svg)')
+  return src('./src/assets/images/*.+(png|jpg|jpeg|gif|svg|ico)')
     .pipe(dest('./dist/img/'));
 }
 
@@ -46,6 +39,8 @@ const video = () => {
   return src('./src/assets/video/*.+(webm|mp4)')
     .pipe(dest('./dist/video/'));
 };
+
+const assetTask = parallel(images, fonts, video)
 
 const cssTask = () => {
   return src('./src/assets/stylesheets/*.scss')
@@ -77,4 +72,4 @@ const watchTask = () => {
   watch(['./src/assets/stylesheets/**/*.scss', './src/assets/javascripts/*.js'], series(cssTask, jsTask, browserSyncReload));
 }
 
-exports.build = series(clean, htmlTask, cssTask, jsTask, browserSyncServe, watchTask, parallel(images, fonts, video));
+exports.build = series(cleanTask, htmlTask, cssTask, jsTask, assetTask, browserSyncServe, watchTask, );
