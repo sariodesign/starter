@@ -18,11 +18,13 @@
 {##}
 
 {# Macro for generate media video #}
-{% macro video(source) %}
-  <video class="o-media--video" playsinline>    
-    {% for src, type in source -%}
-      <source src="{{ src }}" type="{{ type }}">
-    {%- endfor %}
-  </video>
-  {% include "controls.njk" %}
+{% macro video(source, ref) %}
+  <div class="c-video-player">
+    <video class="o-media--video" data-reference="{{ ref }}" playsinline>    
+      {% for src, type in source -%}
+        <source src="{{ src }}" type="{{ type }}">
+      {%- endfor %}
+    </video>
+    {% include "controls.njk" %}
+  </div>
 {% endmacro %}

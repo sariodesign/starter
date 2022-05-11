@@ -68,8 +68,7 @@ const browserSyncReload = (cb) => {
 }
 
 const watchTask = () => {
-  watch('src/**/*.njk', browserSyncReload);
-  watch(['./src/assets/stylesheets/**/*.scss', './src/assets/javascripts/*.js'], series(cssTask, jsTask, browserSyncReload));
+  watch(['./src/assets/stylesheets/**/*.scss', './src/assets/javascripts/*.js', './src/**/*.njk'], series(htmlTask, cssTask, jsTask, browserSyncReload));
 }
 
 exports.build = series(cleanTask, htmlTask, cssTask, jsTask, assetTask, browserSyncServe, watchTask, );

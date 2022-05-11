@@ -1,3 +1,6 @@
+/* MIXINS */
+
+// Media Query
 @mixin media-query($breakpoint, $range: "min-width") {
 
   @if map-has-key($breakpoints, $breakpoint) {
