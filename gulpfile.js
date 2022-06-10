@@ -10,7 +10,7 @@ sass.compiler = require('node-sass');
 
 
 const cleanTask = () => {
-  return src('./dist', {read: false})
+  return src('./dist', {read: false, allowEmpty: true})
         .pipe(clean());
 }
 
